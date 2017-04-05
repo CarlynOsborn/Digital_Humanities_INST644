@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<!--
+A House of Dust reimplementation
+copyright (c) 2014 Nick Montfort <nickm@nickm.com>
+based on a 1967 program by Alison Knowles and James Tenney
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+Updated 10 March 2015 to remove a duplicate value in "place".
+Updated 17 November 2015 to remove a near-duplicate value in "inhabitants".
+Updated 18 November 2015 to add "IN A DESERT" & "ON OPEN GROUND" to "place".
+-->
+<style type="text/css">
+/* <![CDATA[ */
+body {
+ background:#000;
+ color:#ccc;
+ margin:0 0 0 18pt;
+ font-family:Optima, sans-serif;
+ font-size:16pt;
+}
+a {
+ color:#117;
+ text-decoration:none;
+}
+#main {
+ padding-top:18px;
+ width:70%;
+}
+#main div {
+ font-weight:bold;
+ padding-bottom:9px;
+}
+#info {
+ top:0;
+ right:0;
+ bottom:0;
+ position:absolute;
+ height:100%;
+ width:25%;
+ color:#333;
+ background:#999;
+ margin-left:6px;
+ border-left:thin #000 solid;
+ border-bottom:thin #000 solid;
+ padding:9px;
+ font-size:80%
+}
+/* ]]> */
+</style>
+<script type="text/javascript">
+
+var t = 0,
+material = ['THESEUS', 'DISCARDED CLOTHING', 'LEATHER', 'WOODEN PLANKS', 'FEATHERS', 'SKIN', 'BLACK INKY TAR', 'STONE'],
+smell = ['BUTTERY', 'SWEET', 'CINNAMONY', 'INKY', 'CARDAMOMY', 'RANCID', 'BURNT', 'ROTTEN'],
+place = ['IN A BLUE, TURBULENT OCEAN', 'IN AN UNDERPOPULATED AREA', 'B-', 'BY THE SEA', 'DEEP WITHIN A CAVE', 'IN THE LIBRARY', 'LOST UP A MOUNTAIN', 'IN A DESERTED FACTORY', 'IN DENSE WOODS', 'IN A HIDDEN MUSEUM', 'IN THE STACKS', 'AT A PORT', 'NEAR THE DOCKS', 'BEGINNING AND ENDING AT THE WATER' , 'IN HIS CLOSED CABIN', 'IN A COLD, WINDY CLIMATE', 'IN A PLACE WITH BOTH HEAVY RAIN AND BRIGHT SUN', 'UNDER THE AEROPLANES' , 'IN A HOT CLIMATE', 'INSIDE A MOUNTAIN', 'ON THE SEA', 'AMONG THE STALAGMITES', 'AT THE BAZAAR', 'BY A RIVER', 'AMONG STRANGERS', 'IN THE PAINTED CAVE', 'AROUND THE CAMPFIRE', 'UNDERWATER'],
+light_source = ['CANDLES', 'ALL AVAILABLE LIGHTING', 'SCINTILLATING LIGHT', 'GHOST LANTERNS', 'SUNLIGHT THROUGH THE SHIP PLANKS' , 'NATURAL LIGHT'],
+inhabitants = ['PEOPLE WHO SLEEP VERY LITTLE', 'SAILORS', 'BIRDS', 'CAVE PEOPLE', 'PEOPLE WITH THEIR MOUTHS SEWN SHUT', 'THE ANARCHISTS AND BROWNCOATS', 'S.', 'LOVERS IN THE LIBRARY', 'PEOPLE WHO ENJOY OLD MOVIES', 'ARSONISTS', 'STRAKA', 'COLLECTORS OF ALL ARTIFACTS', 'FRIENDS AND ENEMIES', 'PEOPLE WHO SLEEP BELOW DECK', 'VERY LOST PEOPLE', 'PEOPLE LOOKING FOR VEVODA', 'MARKET VENDORS', 'PEOPLE FROM MANY WALKS OF LIFE', 'JEN', 'ERIC', 'ILSA', 'MOODY', 'CALDEIRA', 'PEOPLE WHO LOVE TO READ'];
+
+function rand_range(maximum) {
+    "use strict";
+    return Math.floor(Math.random() * (maximum + 1));
+}
+function choose(array) {
+    "use strict";
+    return array[rand_range(array.length - 1)];
+}
+function stanza() {
+    "use strict";
+    return 'A SHIP OF ' + choose(material) + '<br \>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + choose(smell) + '<br \>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + choose(place) + '<br \>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;USING ' + choose(light_source) + '<br \>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INHABITED BY ' + choose(inhabitants);
+}
+function litany() {
+    "use strict";
+    var last, text, main = document.getElementById('main');
+    if (8 > t) {
+        t += 1;
+    } else {
+        main.removeChild(document.getElementById('main').firstChild);
+    }
+    last = document.createElement('div');
+    last.innerHTML = stanza();
+    main.appendChild(last);
+}
+function produce_litany() {
+    "use strict";
+    litany();
+    setInterval(litany, 5000);
+}
+
+</script>
+  <title>A House of Dust</title>
+</head>
+
+<body onload="produce_litany();">
+<div id="info">
+    <h2>A House of Dust</h2>
+    <h3>Alison Knowles<br />
+    James Tenney</h3>
+    1967<br />
+    Seimens System 4004<br />
+    FORTRAN IV<br />
+    <br />
+    Reimplemented by<br />
+    <a href="http://nickm.com">Nick Montfort</a><br />
+    for <a href="http://nickm.com/memslam/">Memory Slam</a><br />
+    Also: a <a href="a_house_of_dust.py">Python 2</a> version
+</div>
+<div id="main"></div>
+</body>
+</html>
